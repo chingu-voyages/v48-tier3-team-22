@@ -36,7 +36,7 @@ coding!
 
 - Austine #1: [GitHub](https://github.com/EmperorA) / [LinkedIn](https://linkedin.com/in/austineuwumwonse)
 
-- Teammate name #2: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)
+- Aleksandar #2: [GitHub](https://github.com/vukas86) / [LinkedIn](https://linkedin.com/in//aleksandar-vukasovic)
 
   ...
 
