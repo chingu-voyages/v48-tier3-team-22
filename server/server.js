@@ -1,7 +1,10 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const { mongoConnect } = require("./config/db");
+require("dotenv").config();
 
+const userRoutes = require("./Routes/userRoutes");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -11,9 +14,10 @@ app.use(express.json());
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, "client/build")));
 
-// API endpoint example
-app.get("/api", (req, res) => {
-  res.json({ message: "Welcome to the API" });
+// API endpoint
+app.use("/api", userRoutes);
+app.post("/api/test", (req, res) => {
+  res.send("Test route is working");
 });
 
 // Handles any requests that don't match the ones above
@@ -21,6 +25,11 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "/client/build/index.html"));
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+async function startServer() {
+  await mongoConnect();
+
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });
+}
+startServer();

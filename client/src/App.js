@@ -1,11 +1,12 @@
-import "./App.css";
+import styles from "./App.css";
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>Dinosaur App</p>
-      </header>
+    <div className={styles.appContainer}>
+      <Header />
+      <Footer />
     </div>
   );
 }

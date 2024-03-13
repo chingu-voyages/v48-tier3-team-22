@@ -62,7 +62,7 @@ To install and run locally, clone the github repo, then run the command npm inst
 ### Backend:
 
 1. Navigate to your server side from the root project by running the command cd server
-2. Run the command node server.js to start the server side
+2. Run the command nodemon server/server.js to start the server side
 
 ### Full stack:
 
