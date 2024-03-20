@@ -18,11 +18,9 @@ router.post("/register", async (req, res) => {
 
   // Check for whitespace in the email input
   if (email !== email.trim()) {
-    return res
-      .status(400)
-      .json({
-        message: "Your email contains whitespace. Please remove and try again",
-      });
+    return res.status(400).json({
+      message: "Your email contains whitespace. Please remove and try again",
+    });
   }
 
   //Normalize and sanitize email address
@@ -78,7 +76,7 @@ router.post("/register", async (req, res) => {
     console.error("Registration Error:", error);
     res.status(500).json({
       error: "Server_Error",
-      message: "An error occurred during registration.",
+      message: "error",
     });
   }
 });
