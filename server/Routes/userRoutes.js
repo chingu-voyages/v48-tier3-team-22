@@ -6,10 +6,10 @@ const validator = require("validator");
 
 // Registration endpoint
 router.post("/register", async (req, res) => {
-  let { email, password, confirmPassword } = req.body;
+  let { name, email, password, confirmPassword } = req.body;
 
   // Validation: Check for required fields
-  if (!email || !password || !confirmPassword) {
+  if (!name || !email || !password || !confirmPassword) {
     return res.status(400).json({
       error: "Missing_Fields",
       message: "Email, password, and password confirmation are required.",
@@ -69,7 +69,7 @@ router.post("/register", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 12);
 
     // Create new user
-    const newUser = new User({ email, password: hashedPassword });
+    const newUser = new User({ name, email, password: hashedPassword });
     await newUser.save();
     res.status(201).json({ message: "User registered successfully." });
   } catch (error) {
@@ -101,7 +101,7 @@ router.post("/login", async (req, res) => {
         message: "Invalid credentials.",
       });
 
-    res.json({ message: "User logged in successfully.", email: user.email });
+    res.json({ message: "User logged in successfully.", name: user.name });
   } catch (error) {
     console.error("Login Error:", error);
     res.status(500).json({
