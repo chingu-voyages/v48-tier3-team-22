@@ -16,9 +16,6 @@ app.use(express.static(path.join(__dirname, "client/build")));
 
 // API endpoint
 app.use("/api", userRoutes);
-app.post("/api/test", (req, res) => {
-  res.send("Test route is working");
-});
 
 // Handles any requests that don't match the ones above
 app.get("*", (req, res) => {
