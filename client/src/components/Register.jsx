@@ -57,7 +57,7 @@ const Button = styled.button`
   border: none;
   border-radius: 0.25rem;
   cursor: pointer;
-  text-decoration: none; /* Ensures the link does not have underlines */
+  text-decoration: none; 
 
   &:hover {
     transform: scale(1.1); 
@@ -73,61 +73,94 @@ const LinkButton = styled.button`
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
   const history = useHistory();
 
-  const saveUserDataToLocalStorage = (userData) => {
-    // Retrieve existing users data from localStorage
-    const existingUsersData = JSON.parse(localStorage.getItem('usersData')) || [];
+  //  /const saveUserDataToLocalStorage = (userData) => {
+  //        Retrieve existing users data from localStorage
+  //       const existingUsersData = JSON.parse(localStorage.getItem('usersData')) || [];
 
-    // Add new user data to the existing array
-    existingUsersData.push(userData);
+  //       // Add new user data to the existing array
+  //       existingUsersData.push(userData);
 
-    // Save the updated array back to localStorage
-    localStorage.setItem('usersData', JSON.stringify(existingUsersData));
-    console.log('User data has been saved to localStorage');
-  };
-
+  //       // Save the updated array back to localStorage
+  //       localStorage.setItem('usersData', JSON.stringify(existingUsersData));
+  //       console.log('User data has been saved to localStorage');
+  //   };
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
-    
-    const userData = {
-      name: name,
-      email: email,
-      password: password
+    try {
+      const response = await fetch("http://localhost:5000/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+          confirmPassword
+        }),
+
+      });
+      if (!response.ok) {
+        const errorText = await response.text();
+        alert(`Registration failed: ${errorText}`);
+      } else {
+        alert("Registration successfully");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+
+
+    //     if (password !== confirmPassword) {
+    //         alert("Passwords do not match. Please try again.");
+    //         return;
+    //     }
+
+    //     const userData = {
+    //         name: name,
+    //         email: email,
+    //         password: password
+    //     };
+
+    //     saveUserDataToLocalStorage(userData);
+
+    //     history.push("/Success");
+    // };
+
+    // const redirectToLogin = () => {
+    //     history.push("/Login");
     };
 
-    saveUserDataToLocalStorage(userData); 
+return (
+  <Container>
+    <Card>
+      <Image src={DinosaurImage} alt="Dinosaur" />
+      <Title>Sign Up</Title>
+      <Form onSubmit={handleSubmit}>
+        <Label htmlFor="name">Full Name</Label>
+        <Input value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="Your Full Name" id="name" name="name" />
 
-    history.push("/Success"); 
-  };
+        <Label htmlFor="email">Your Email</Label>
+        <Input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="youremail@gmail.com" id="email" name="email" />
 
-  const redirectToLogin = () => {
-    history.push("/Login");
-  };
+        <Label htmlFor="password">Password</Label>
+        <Input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="***********" id="password" name="password" />
 
-  return (
-    <Container>
-      <Card>
-        <Image src={DinosaurImage} alt="Dinosaur" />
-        <Title>Sign Up</Title>
-        <Form onSubmit={handleSubmit}>
-          <Label htmlFor="name">Full Name</Label>
-          <Input value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="Your Full Name" id="name" name="name" />
+        <Label htmlFor="confirmPassword">Confirm Password</Label>
+        <Input value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} type="password" placeholder="***********" id="confirmPassword" name="confirmPassword" />
 
-          <Label htmlFor="email">Your Email</Label>
-          <Input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="youremail@gmail.com" id="email" name="email" />
-
-          <Label htmlFor="password">Password</Label>
-          <Input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="***********" id="password" name="password" />
-
-          <Button type="submit">Sign Up</Button>
-        </Form>
-        <LinkButton onClick={redirectToLogin}>Already have an account? Sign In</LinkButton>
-      </Card>
-    </Container>
-  );
+        <Button type="submit">Sign Up</Button>
+      </Form>
+      <LinkButton onClick={redirectToLogin}>Already have an account? Sign In</LinkButton>
+    </Card>
+  </Container>
+);
 };
 
 export default Register;
