@@ -1,16 +1,15 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
-import DinosaurPage from './components/Dinosaurs/DinosaurPage';
-import Login from './components/Login';
-import Register from './components/Register';
-import Success from './components/Success';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
+import DinosaurPage from "./components/Dinosaurs/DinosaurPage";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import Success from "./components/Success";
 
 function App() {
   return (
     <Router>
-        <div>
+      <div>
         <Switch>
           <Route path="/Login" component={Login} />
           <Route path="/Register" component={Register} />
