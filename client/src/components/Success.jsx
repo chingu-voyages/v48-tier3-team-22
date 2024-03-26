@@ -1,5 +1,6 @@
 import React from "react";
 import styled from 'styled-components';
+import { Link } from 'react-router-dom'; 
 
 // Styled components
 const Container = styled.div`
@@ -56,20 +57,25 @@ const Button = styled.button`
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #c53030; /* Darker shade of red */
+    background-color: #c53030; 
   }
 `;
 
+const LinkButton = styled(Link)`
+text-decoration: none;`
+
 const Success = () => {
-  return (
-    <Container>
-      <Card>
-        <Title>Unleash Your Inner T-Rex! Roar into Adventure with our Dino-tastic App!</Title>
-        <Description>Thank you for signing up! Your account has been successfully created.</Description>
-        <Button>Get Started</Button>
-      </Card>
-    </Container>
-  );
+    return (
+        <Container>
+            <Card>
+                <Title>Unleash Your Inner T-Rex! Roar into Adventure with our Dino-tastic App!</Title>
+                <Description>Thank you for signing up! Your account has been successfully created.</Description>
+                <LinkButton to="/login">
+                    <Button>Get Started</Button>
+                </LinkButton>
+            </Card>
+        </Container>
+    );
 };
 
 export default Success;
