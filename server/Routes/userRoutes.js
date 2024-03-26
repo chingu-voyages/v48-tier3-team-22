@@ -3,9 +3,14 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 const router = express.Router();
 const validator = require("validator");
+const jwt = require("jsonwebtoken");
+
+require("dotenv").config();
+
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // Registration endpoint
-router.post("/register", async (req, res) => {
+router.post("/auth/register", async (req, res) => {
   let { name, email, password, confirmPassword } = req.body;
 
   // Validation: Check for required fields
@@ -82,7 +87,7 @@ router.post("/register", async (req, res) => {
 });
 
 // Login endpoint
-router.post("/login", async (req, res) => {
+router.post("/auth/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -95,13 +100,24 @@ router.post("/login", async (req, res) => {
 
     // Compare password
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch)
+    if (!isMatch) {
       return res.status(400).json({
         error: "Invalid_Credentials",
         message: "Invalid credentials.",
       });
+    }
 
-    res.json({ message: "User logged in successfully.", name: user.name });
+    //create token
+    const token = jwt.sign({ userID: user._id }, JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+    //send token to client
+    res.json({
+      message: "User logged in successfully.",
+      token,
+      name: user.name,
+    });
   } catch (error) {
     console.error("Login Error:", error);
     res.status(500).json({
