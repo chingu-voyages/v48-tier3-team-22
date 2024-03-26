@@ -52,7 +52,7 @@ const DinosaurPage = () => {
   };
 
   return (
-    <div>
+    <div className="pt-[115px]">
       <div>
         <form action="" onSubmit={searchDinosaurs}>
           <input

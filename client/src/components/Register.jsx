@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import DinosaurImage from "../assets/Dinosaur.jpg";
 
@@ -75,7 +75,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -98,7 +98,7 @@ const Register = () => {
       } else {
         alert("Registration successfully");
 
-        history.push("/Login");
+        navigate("/Login");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -107,11 +107,11 @@ const Register = () => {
   //
 
   const redirectToLogin = () => {
-    history.push("/Login");
+    navigate("/Login");
   };
 
   return (
-    <Container>
+    <Container className="pt-[115px]">
       <Card>
         <Image src={DinosaurImage} alt="Dinosaur" />
         <Title>Sign Up</Title>
