@@ -7,8 +7,9 @@ import newspaper from "../../assets/dino-newspaper.png";
 const NewsPage = () => {
   const [news, setNews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [articleCount, setArticleCount] = useState(10);
   const apiKey = "82fe875a3ebf429badca4cb752ea227d";
-  const apiUrl = `https://newsapi.org/v2/everything?q=dinosaurs&apiKey=${apiKey}`;
+  const apiUrl = `https://newsapi.org/v2/everything?qInTitle=dinosaurs&apiKey=${apiKey}`;
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -24,6 +25,10 @@ const NewsPage = () => {
     fetchNews();
   }, [apiUrl]);
   console.log(news);
+
+  const coutHandler = () => {
+    setArticleCount((prevCount) => prevCount + 5);
+  };
 
   if (isLoading) {
     return (
@@ -44,12 +49,12 @@ const NewsPage = () => {
               className="w-full h-auto mt-6"
             />
           </div>
-          <div className="w-1/1 p-1 pt-8  ml-[40%] ">
+          <div className="w-1/1 p-1 pt-8 ml-[40%] ">
             <h2 className="text-6xl font-bold mb-8 text-center">
               Dinosaurs News
             </h2>
             <ul>
-              {news.slice(0, 10).map((article, index) => (
+              {news.slice(0, articleCount).map((article, index) => (
                 <article key={index} className={styles.articleContainer}>
                   <p>{article.source.name}</p>
                   <a
@@ -65,6 +70,14 @@ const NewsPage = () => {
                 </article>
               ))}
             </ul>
+            <div className="m-8">
+              <button
+                className="p-[8px] bg-emerald-500 text-[#fff] font-bold rounded-xl md:text-[20px] relative"
+                onClick={coutHandler}
+              >
+                Load More
+              </button>
+            </div>
           </div>
         </div>
       </div>

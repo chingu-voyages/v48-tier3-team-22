@@ -12,13 +12,13 @@ nav a.active {
 }
 
 .loader {
-  background: #10b981;
+  /* background: #10b981; */
   width: 48px;
   height: 48px;
   display: block;
   margin: 20px auto;
   position: relative;
-  border: 3px solid #fff;
+  border: 3px solid #10b981;
   border-radius: 50%;
   box-sizing: border-box;
   animation: animloader 2s linear infinite;
