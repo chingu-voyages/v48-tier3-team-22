@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import styles from "./News.module.css";
+import newspaper from "../../assets/dino-newspaper.png";
 
 const NewsPage = () => {
   const [news, setNews] = useState([]);
@@ -24,18 +26,21 @@ const NewsPage = () => {
     <>
       <div className="pt-[115px]">
         <div className="flex">
-          <div className="w-1/3 p-4">
+          <div className="w-2/5  p-4 bg-green-200  fixed left-0  bottom-0">
             <img
-              src="https://www.bing.com/images/create/realistic-image2c-dinosaur-reading-a-newspaper/1-66034c67cd80470cb658c4016be56ee1?id=eCEmRPUVkEtfAVEWA1AHFA%3d%3d&view=detailv2&idpp=genimg&thId=OIG4.V1PUPn2c6LSbP5FEKPvB&FORM=GCRIDP&mode=overlay"
+              src={newspaper}
               alt="Dinosaur"
-              className="w-full h-auto"
+              className="w-full h-auto mt-6"
             />
           </div>
-          <div className="w-1/1 p-1">
-            <h2 className="text-2xl font-bold mb-4">Dinosaur News</h2>
+          <div className="w-1/1 p-1 pt-8  ml-[40%] ">
+            <h2 className="text-6xl font-bold mb-8 text-center">
+              Dinosaurs News
+            </h2>
             <ul>
-              {news.slice(0, 3).map((article, index) => (
-                <li key={index} className="mb-2">
+              {news.slice(0, 10).map((article, index) => (
+                <article key={index} className={styles.articleContainer}>
+                  <p>{article.source.name}</p>
                   <a
                     href={article.url}
                     target="_blank"
@@ -43,7 +48,10 @@ const NewsPage = () => {
                   >
                     {article.title}
                   </a>
-                </li>
+                  <div className="ml-auto">
+                    <span>{new Date(article.publishedAt).getFullYear()}</span>
+                  </div>
+                </article>
               ))}
             </ul>
           </div>
