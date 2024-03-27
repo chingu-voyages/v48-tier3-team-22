@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Loading from "../Loading";
 import styles from "./News.module.css";
 import newspaper from "../../assets/dino-newspaper.png";
 
 const NewsPage = () => {
   const [news, setNews] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const apiKey = "82fe875a3ebf429badca4cb752ea227d";
   const apiUrl = `https://newsapi.org/v2/everything?q=dinosaurs&apiKey=${apiKey}`;
 
@@ -13,6 +15,7 @@ const NewsPage = () => {
       try {
         const response = await axios.get(apiUrl);
         setNews(response.data.articles);
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching news:", error);
       }
@@ -21,6 +24,14 @@ const NewsPage = () => {
     fetchNews();
   }, [apiUrl]);
   console.log(news);
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-96">
+        <Loading />
+      </div>
+    );
+  }
 
   return (
     <>
