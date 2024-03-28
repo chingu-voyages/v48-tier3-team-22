@@ -8,8 +8,9 @@ const NewsPage = () => {
   const [news, setNews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [articleCount, setArticleCount] = useState(10);
-  const apiKey = "82fe875a3ebf429badca4cb752ea227d";
-  const apiUrl = `https://newsapi.org/v2/everything?qInTitle=dinosaurs&apiKey=${apiKey}`;
+  // const apiKey = "82fe875a3ebf429badca4cb752ea227d";
+  const api2Key = import.meta.env.VITE_SOME_KEY;
+  const apiUrl = `https://newsapi.org/v2/everything?qInTitle=dinosaurs&apiKey=${api2Key}`;
 
   useEffect(() => {
     const fetchNews = async () => {
