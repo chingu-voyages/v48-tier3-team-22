@@ -1,28 +1,25 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
-
-import { isLoggedIn, getUserName } from "../auth/authService";
+import { useDispatch, useSelector } from "react-redux";
+import { logout as logoutAction } from "../../state/user";
 
 import DinoLogo from "../../assets/Dinosaur.jpg";
 
 const Header = () => {
   const [isClicked, setIsClicked] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const loggedIn = useSelector((state) => state.user.isLoggedIn);
+  const userName = useSelector((state) => state.user.userName);
 
   const toggleBtn = () => {
     setIsClicked(!isClicked);
   };
 
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [userName, setUserName] = useState("");
-
-  useEffect(() => {
-    if (isLoggedIn()) {
-      setLoggedIn(true);
-      setUserName(getUserName());
-    }
-  }, []);
-
+  const handleLogout = () => {
+    dispatch(logoutAction());
+    navigate("/");
+  };
   return (
     <header className="p-[15px] md:p-[18px] flex flex-row justify-between items-center text-emerald-100   md:my-0 fixed z-50 top-0 left-0 right-0 bg-gradient-to-tl from-green-950 to-black-900 ">
       <div className="flex items-center">
@@ -42,7 +39,15 @@ const Header = () => {
       </nav>
 
       {loggedIn ? (
-        <p>Welcome, {userName}</p>
+        <div>
+          <p>Welcome, {userName}</p>
+          <p
+            className="p-[5px] hover:font-bold cursor-pointer"
+            onClick={handleLogout}
+          >
+            Log Out
+          </p>
+        </div>
       ) : (
         <div onClick={toggleBtn}>
           <button className="p-[8px] bg-emerald-500 text-[#fff] font-bold rounded-xl md:text-[20px] relative">

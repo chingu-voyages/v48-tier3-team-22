@@ -74,7 +74,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [name, setName] = useState("");
+  const [userName, setName] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -86,7 +86,7 @@ const Register = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name,
+          userName,
           email,
           password,
           confirmPassword,
@@ -98,7 +98,7 @@ const Register = () => {
       } else {
         alert("Registration successfully");
 
-        navigate("/dinosaurs");
+        navigate("/auth/Login");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -116,14 +116,14 @@ const Register = () => {
         <Image src={DinosaurImage} alt="Dinosaur" />
         <Title>Sign Up</Title>
         <Form onSubmit={handleSubmit}>
-          <Label htmlFor="name">Full Name</Label>
+          <Label htmlFor="name">User Name</Label>
           <Input
-            value={name}
+            value={userName}
             onChange={(e) => setName(e.target.value)}
             type="text"
-            placeholder="Your Full Name"
-            id="name"
-            name="name"
+            placeholder="Username"
+            id="userName"
+            name="userName"
           />
 
           <Label htmlFor="email">Your Email</Label>

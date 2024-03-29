@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import DinosaurImage from "../../assets/DinosaurReading.jpg";
+import { login } from "../../state/user";
+
+import { useDispatch, useSelector } from "react-redux";
 
 const Container = styled.div`
   min-height: 90vh;
@@ -73,32 +76,19 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/dinosaurs");
+    }
+  }, [isLoggedIn, navigate]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:5000/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.token) {
-          // Store the token in localStorage
-          localStorage.setItem("token", data.token);
-          console.log("Login successful");
-        } else {
-          console.error("Login failed");
-        }
-      })
-      .catch((error) => console.error("Error:", error));
 
-    // Redirect to home or any desired page after login
-    navigate("/dinosaurs");
+    dispatch(login({ email, password }));
   };
 
   const redirectToRegister = () => {
@@ -130,7 +120,7 @@ const Login = () => {
           <SubmitButton type="submit">Sign In</SubmitButton>
         </Form>
         <LinkButton onClick={redirectToRegister}>
-          Don't have an account? Sign Up
+          Don`t have an account? Sign Up
         </LinkButton>
       </Card>
     </Container>

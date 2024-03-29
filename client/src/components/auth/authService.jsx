@@ -1,10 +1,9 @@
-// AuthService.js
-const loginUser = (token, userName) => {
-  localStorage.setItem("token", token);
-  localStorage.setItem("userName", userName);
+const setUserData = (data) => {
+  localStorage.setItem("token", data.token);
+  localStorage.setItem("userName", data.userName);
 };
 
-const logoutUser = () => {
+const clearUserData = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("userName");
 };
@@ -17,4 +16,6 @@ const getUserName = () => {
   return localStorage.getItem("userName");
 };
 
-export { loginUser, logoutUser, isLoggedIn, getUserName };
+const authService = { setUserData, clearUserData, isLoggedIn, getUserName };
+
+export default authService;
