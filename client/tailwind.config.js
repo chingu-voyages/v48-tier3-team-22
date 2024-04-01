@@ -1,12 +1,16 @@
-module.exports = {
-  mode: 'jit',
-  purge: ['./index.html', './src/**/*.{js,jsx,ts,tsx}'],
-  darkMode: false, 
+export default {
+  mode: "jit",
+  purge: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
+  darkMode: false,
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        Roboto: "Roboto",
+      },
+    },
   },
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar")],
 };

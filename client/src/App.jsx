@@ -12,7 +12,7 @@ import DinosaurLocation from "./components/Dinosaurs/DinosaurLocation";
 
 function App() {
   return (
-    <div className="appContainer">
+    <div className="appContainer font-roboto">
       <Router>
         <Header />
 
