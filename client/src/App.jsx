@@ -9,6 +9,7 @@ import Register from "./components/Register";
 import Success from "./components/Success";
 import Chart from "./components/Chart/Chart";
 import DinosaurLocation from "./components/Dinosaurs/DinosaurLocation";
+import PageNotFound from "./components/PageNotFound";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/Success" element={<Success />} />
           <Route path="/chart" element={<Chart />} />
           <Route path="/location" element={<DinosaurLocation />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
 
         <Footer />
