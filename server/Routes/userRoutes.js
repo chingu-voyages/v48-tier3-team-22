@@ -3,16 +3,23 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 const router = express.Router();
 const validator = require("validator");
+const jwt = require("jsonwebtoken");
+
+const tokenDenylist = {};
+
+require("dotenv").config();
+
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // Registration endpoint
-router.post("/register", async (req, res) => {
-  let { name, email, password, confirmPassword } = req.body;
+router.post("/auth/register", async (req, res) => {
+  let { userName, email, password, confirmPassword } = req.body;
 
   // Validation: Check for required fields
-  if (!name || !email || !password || !confirmPassword) {
+  if (!userName || !email || !password || !confirmPassword) {
     return res.status(400).json({
       error: "Missing_Fields",
-      message: "Email, password, and password confirmation are required.",
+      message: "All fields are required.",
     });
   }
 
@@ -69,7 +76,7 @@ router.post("/register", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 12);
 
     // Create new user
-    const newUser = new User({ name, email, password: hashedPassword });
+    const newUser = new User({ userName, email, password: hashedPassword });
     await newUser.save();
     res.status(201).json({ message: "User registered successfully." });
   } catch (error) {
@@ -82,7 +89,7 @@ router.post("/register", async (req, res) => {
 });
 
 // Login endpoint
-router.post("/login", async (req, res) => {
+router.post("/auth/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -95,18 +102,58 @@ router.post("/login", async (req, res) => {
 
     // Compare password
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch)
+    if (!isMatch) {
       return res.status(400).json({
         error: "Invalid_Credentials",
         message: "Invalid credentials.",
       });
+    }
 
-    res.json({ message: "User logged in successfully.", name: user.name });
+    //create token
+    const token = jwt.sign({ userID: user._id }, JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+    //send token to client
+    res.json({
+      message: "User logged in successfully.",
+      token,
+      userName: user.userName,
+    });
   } catch (error) {
     console.error("Login Error:", error);
     res.status(500).json({
       error: "Server_Error",
       message: "An error occurred during login.",
+    });
+  }
+});
+
+//logout endpoint
+
+router.post("/auth/logout", (req, res) => {
+  const { token } = req.body;
+  if (!token) {
+    return res.status(400).json({
+      error: "Missing_Token",
+      message: "Token is required for logout.",
+    });
+  }
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    const exp = decoded.exp * 1000; // JWT exp is in seconds. Convert to milliseconds
+
+    // Add token to denylist until it expires
+    tokenDenylist[token] = true;
+    setTimeout(() => delete tokenDenylist[token], exp - Date.now());
+
+    return res.status(200).json({ message: "User logged out successfully." });
+  } catch (error) {
+    console.error("Logout Error:", error);
+    return res.status(500).json({
+      error: "Server_Error",
+      message: "An error occurred during logout.",
     });
   }
 });
