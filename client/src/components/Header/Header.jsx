@@ -3,7 +3,7 @@ import { useNavigate, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout as logoutAction } from "../../state/user";
 
-import DinoLogo from "../../assets/Dinosaur.jpg";
+import DinoLogo from "../../assets/dino-logo.png";
 
 import MenuIcon from "../../assets/menu-icon.png";
 import CloseMenuIcon from "../../assets/close-menu-icon.png";
