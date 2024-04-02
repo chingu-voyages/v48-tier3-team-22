@@ -3,13 +3,10 @@ import { useNavigate, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout as logoutAction } from "../../state/user";
 
-
 import DinoLogo from "../../assets/Dinosaur.jpg";
 
-import DinoLogo from "../../assets/dino-logo.png";
 import MenuIcon from "../../assets/menu-icon.png";
 import CloseMenuIcon from "../../assets/close-menu-icon.png";
-
 
 const Header = () => {
   const [isClicked, setIsClicked] = useState(false);
@@ -22,7 +19,6 @@ const Header = () => {
   const toggleBtn = () => {
     setIsClicked(!isClicked);
   };
-
 
   const handleLogout = () => {
     dispatch(logoutAction());
@@ -41,7 +37,6 @@ const Header = () => {
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
-
 
   return (
     <header className="p-[15px] md:p-[18px] flex flex-row justify-between items-center text-emerald-100   md:my-0 fixed z-50 top-0 left-0 right-0 bg-gradient-to-tl from-green-950 to-black-950">
@@ -81,7 +76,6 @@ const Header = () => {
         </NavLink>
       </nav>
 
-
       {loggedIn ? (
         <div>
           <p>Welcome, {userName}</p>
@@ -93,65 +87,42 @@ const Header = () => {
           </p>
         </div>
       ) : (
-        <div onClick={toggleBtn}>
-          <button className="p-[8px] bg-emerald-500 text-[#fff] font-bold rounded-xl md:text-[20px] relative">
+        <div className="flex items-center">
+          <button
+            onClick={toggleBtn}
+            className="p-[8px] bg-emerald-500 text-[#fff] font-bold rounded-xl text-[14px] md:text-[20px] relative hidden md:block"
+          >
             Get started
           </button>
           {isClicked && (
-            <div className="absolute flex flex-col justify-center items-center bg-[#fff] text-emerald-500 rounded-b-xl rounded-t right-[18px] w-[125px] p-[10px]">
+            <div className="absolute flex flex-col justify-center items-center bg-[#fff] text-emerald-500 rounded-b-xl rounded-t top-[53px] md:right-[18px] md:top-[71px] w-[93px] md:w-[125px] p-[10px]">
               <p
-                className="p-[5px] hover:font-bold cursor-pointer"
-                onClick={() => navigate("/auth/register")}
+                className="p-[5px] hover:font-bold cursor-pointer text-[14px] md:text-base"
+                onClick={() => closeBtn("/auth/register")}
               >
                 Sign Up
               </p>
               <p
-                className="p-[5px] hover:font-bold cursor-pointer"
-                onClick={() => navigate("/auth/login")}
+                className="p-[5px] hover:font-bold cursor-pointer text-[14px] md:text-base"
+                onClick={() => closeBtn("/auth/login")}
               >
                 Log In
               </p>
             </div>
           )}
+
+          <div
+            onClick={toggleMenu}
+            className="md:hidden w-[40px] ml-[10px] md:ml-[20px]"
+          >
+            {isMenuOpen ? (
+              <img src={CloseMenuIcon} alt="" className="cursor-pointer" />
+            ) : (
+              <img src={MenuIcon} alt="" className="cursor-pointer" />
+            )}{" "}
+          </div>
         </div>
       )}
-
-      <div className="flex items-center">
-        <button
-          onClick={toggleBtn}
-          className="p-[8px] bg-emerald-500 text-[#fff] font-bold rounded-xl text-[14px] md:text-[20px] relative hidden md:block"
-        >
-          Get started
-        </button>
-        {isClicked && (
-          <div className="absolute flex flex-col justify-center items-center bg-[#fff] text-emerald-500 rounded-b-xl rounded-t top-[53px] md:right-[18px] md:top-[71px] w-[93px] md:w-[125px] p-[10px]">
-            <p
-              className="p-[5px] hover:font-bold cursor-pointer text-[14px] md:text-base"
-              onClick={() => closeBtn("/register")}
-            >
-              Sign Up
-            </p>
-            <p
-              className="p-[5px] hover:font-bold cursor-pointer text-[14px] md:text-base"
-              onClick={() => closeBtn("/login")}
-            >
-              Log In
-            </p>
-          </div>
-        )}
-
-        <div
-          onClick={toggleMenu}
-          className="md:hidden w-[40px] ml-[10px] md:ml-[20px]"
-        >
-          {isMenuOpen ? (
-            <img src={CloseMenuIcon} alt="" className="cursor-pointer" />
-          ) : (
-            <img src={MenuIcon} alt="" className="cursor-pointer" />
-          )}{" "}
-        </div>
-      </div>
-
     </header>
   );
 };

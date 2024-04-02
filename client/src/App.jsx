@@ -26,7 +26,6 @@ function App() {
           <Route path="/auth/Login" element={<Login />} />
           <Route path="/auth/logout" element={<HomePage />} />
           <Route path="/auth/Register" element={<Register />} />
-
           <Route path="/chart" element={<Chart />} />
           <Route path="/location" element={<DinosaurLocation />} />
           <Route path="*" element={<PageNotFound />} />
