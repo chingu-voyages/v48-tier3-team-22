@@ -98,13 +98,21 @@ const Header = () => {
             <div className="absolute flex flex-col justify-center items-center bg-[#fff] text-emerald-500 rounded-b-xl rounded-t top-[53px] md:right-[18px] md:top-[71px] w-[93px] md:w-[125px] p-[10px]">
               <p
                 className="p-[5px] hover:font-bold cursor-pointer text-[14px] md:text-base"
+
                 onClick={() => closeBtn("/auth/register")}
+
+               
+
               >
                 Sign Up
               </p>
               <p
                 className="p-[5px] hover:font-bold cursor-pointer text-[14px] md:text-base"
+
                 onClick={() => closeBtn("/auth/login")}
+
+               
+
               >
                 Log In
               </p>
