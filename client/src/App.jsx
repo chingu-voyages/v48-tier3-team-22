@@ -9,10 +9,11 @@ import Register from "./components/auth/Register";
 import AuthRoute from "./components/auth/authRoute";
 import Chart from "./components/Chart/Chart";
 import DinosaurLocation from "./components/Dinosaurs/DinosaurLocation";
+import PageNotFound from "./components/PageNotFound";
 
 function App() {
   return (
-    <div className="appContainer">
+    <div className="appContainer font-roboto">
       <Router>
         <Header />
 
@@ -28,6 +29,7 @@ function App() {
 
           <Route path="/chart" element={<Chart />} />
           <Route path="/location" element={<DinosaurLocation />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
 
         <Footer />
