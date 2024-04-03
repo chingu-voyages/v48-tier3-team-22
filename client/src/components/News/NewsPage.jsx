@@ -1,29 +1,23 @@
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchNews } from "../../state/news";
+
 import axios from "axios";
 import Loading from "../Loading";
 import styles from "./News.module.css";
 import newspaper from "../../assets/dino-newspaper.png";
 
 const NewsPage = () => {
-  const [news, setNews] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
+  const { news, isLoading, error } = useSelector((state) => state.news);
+
   const [articleCount, setArticleCount] = useState(10);
-  const api2Key = import.meta.env.VITE_SOME_KEY;
-  const apiUrl = `https://newsapi.org/v2/everything?qInTitle=dinosaurs&apiKey=${api2Key}`;
 
   useEffect(() => {
-    const fetchNews = async () => {
-      try {
-        const response = await axios.get(apiUrl);
-        setNews(response.data.articles);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Error fetching news:", error);
-      }
-    };
-
-    fetchNews();
-  }, [apiUrl]);
+    dispatch(fetchNews());
+  }, [dispatch]);
+  console.log(news.articles);
+  const articles = news.articles;
 
   const coutHandler = () => {
     setArticleCount((prevCount) => prevCount + 5);
@@ -53,7 +47,7 @@ const NewsPage = () => {
               Dinosaurs News
             </h2>
             <ul>
-              {news.slice(0, articleCount).map((article, index) => (
+              {articles?.slice(0, articleCount).map((article, index) => (
                 <article key={index} className={styles.articleContainer}>
                   <p>{article.source.name}</p>
                   <a
