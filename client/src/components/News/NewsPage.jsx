@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchNews } from "../../state/news";
+import NewsModal from "./NewsModal";
 
 import axios from "axios";
 import Loading from "../Loading";
@@ -10,6 +11,7 @@ import newspaper from "../../assets/dino-newspaper.png";
 const NewsPage = () => {
   const dispatch = useDispatch();
   const { news, isLoading, error } = useSelector((state) => state.news);
+  const [selectedArticle, setSelectedArticle] = useState(null);
 
   const [articleCount, setArticleCount] = useState(10);
 
@@ -21,6 +23,18 @@ const NewsPage = () => {
 
   const coutHandler = () => {
     setArticleCount((prevCount) => prevCount + 5);
+  };
+
+  const articleHandler = (article) => {
+    setSelectedArticle(article);
+  };
+
+  const closeModalHandler = () => {
+    setSelectedArticle(null);
+  };
+
+  const preventLoadHandler = (e) => {
+    e.preventDefault();
   };
 
   if (isLoading) {
@@ -48,15 +62,13 @@ const NewsPage = () => {
             </h2>
             <ul>
               {articles?.slice(0, articleCount).map((article, index) => (
-                <article key={index} className={styles.articleContainer}>
+                <article
+                  key={index}
+                  className={styles.articleContainer}
+                  onClick={() => articleHandler(article)}
+                >
                   <p>{article.source.name}</p>
-                  <a
-                    href={article.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {article.title}
-                  </a>
+                  <a onClick={preventLoadHandler}>{article.title}</a>
                   <div className="ml-auto">
                     <span>{new Date(article.publishedAt).getFullYear()}</span>
                   </div>
@@ -74,6 +86,9 @@ const NewsPage = () => {
           </div>
         </div>
       </div>
+      {selectedArticle && (
+        <NewsModal article={selectedArticle} onClose={closeModalHandler} />
+      )}
     </>
   );
 };

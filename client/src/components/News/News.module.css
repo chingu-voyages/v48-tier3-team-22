@@ -19,6 +19,7 @@
 
 .articleContainer a {
   font-size: 64px;
+  cursor: pointer;
 }
 
 .articleContainer a:hover {
