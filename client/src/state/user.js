@@ -6,11 +6,14 @@ export const login = createAsyncThunk(
   "user/login",
   async (credentials, { rejectWithValue }) => {
     try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(credentials),
-      });
+      const response = await fetch(
+        "https://v48-tier3-team-22-api.onrender.com/api/auth/login",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(credentials),
+        },
+      );
       if (!response.ok) throw new Error("Network response was not ok");
       const data = await response.json();
 
@@ -19,7 +22,7 @@ export const login = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 // Async thunk for logging out
@@ -33,11 +36,14 @@ export const logout = createAsyncThunk(
       return rejectWithValue("No token found");
     }
     try {
-      const response = await fetch("http://localhost:5000/api/auth/logout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token }),
-      });
+      const response = await fetch(
+        "https://v48-tier3-team-22-api.onrender.com/api/auth/logout",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token }),
+        },
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -48,7 +54,7 @@ export const logout = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 const userSlice = createSlice({
