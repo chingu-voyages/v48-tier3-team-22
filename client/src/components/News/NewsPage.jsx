@@ -33,6 +33,10 @@ const NewsPage = () => {
     setSelectedArticle(null);
   };
 
+  const preventLoadHandler = (e) => {
+    e.preventDefault();
+  };
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-96">
@@ -64,13 +68,7 @@ const NewsPage = () => {
                   onClick={() => articleHandler(article)}
                 >
                   <p>{article.source.name}</p>
-                  <a
-                    href={article.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {article.title}
-                  </a>
+                  <a onClick={preventLoadHandler}>{article.title}</a>
                   <div className="ml-auto">
                     <span>{new Date(article.publishedAt).getFullYear()}</span>
                   </div>
@@ -96,3 +94,4 @@ const NewsPage = () => {
 };
 
 export default NewsPage;
+s;
