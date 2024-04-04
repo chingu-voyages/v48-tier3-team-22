@@ -1,0 +1,31 @@
+.articleContainer {
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.5s ease-in-out;
+  border-bottom: 2px solid gray;
+  margin-top: 20px;
+  margin-left: 40px;
+  padding-bottom: 15px;
+}
+
+.articleContainer:hover {
+  border-color: #10b981;
+}
+
+.articleContainer p {
+  font-size: 18px;
+  color: #b8b8b8;
+}
+
+.articleContainer a {
+  font-size: 64px;
+}
+
+.articleContainer a:hover {
+  color: #10b981;
+}
+
+.articleContainer span {
+  font-size: 74px;
+  color: #b8b8b8;
+}

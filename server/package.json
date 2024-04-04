@@ -1,0 +1,41 @@
+{
+  "name": "v48-tier3-team-22",
+  "version": "1.0.0",
+  "description": "Your project's `readme` is as important to success as your code. For \r this reason you should put as much care into its creation and maintenance\r as you would any other component of the application.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run start\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chingu-voyages/v48-tier3-team-22.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chingu-voyages/v48-tier3-team-22/issues"
+  },
+  "homepage": "https://github.com/chingu-voyages/v48-tier3-team-22#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.3",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.2.1",
+    "nodemon": "^3.1.0",
+    "tailwindcss": "^3.4.1",
+    "validator": "^13.11.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "nodeman": "^1.1.2",
+    "react-scripts": "^5.0.1"
+  }
+}
