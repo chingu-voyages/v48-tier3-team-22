@@ -80,18 +80,21 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "https://v48-tier3-team-22-api.onrender.com/api/auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userName,
+            email,
+            password,
+            confirmPassword,
+          }),
         },
-        body: JSON.stringify({
-          userName,
-          email,
-          password,
-          confirmPassword,
-        }),
-      });
+      );
       if (!response.ok) {
         const errorText = await response.text();
         alert(`Registration failed: ${errorText}`);
