@@ -49,11 +49,11 @@ const NewsPage = () => {
     <>
       <div className="pt-[115px]">
         <div className="flex">
-          <div className="w-2/5  p-4 bg-green-200  fixed left-0  bottom-0">
+          <div className=" w-2/5  p-4 bg-green-200  fixed left-0  bottom-0">
             <img
               src={newspaper}
               alt="Dinosaur"
-              className="w-full h-auto mt-6"
+              className="mt-4 w-full h-auto mt-6"
             />
           </div>
           <div className="w-1/1 p-1 pt-8 ml-[40%] ">
@@ -94,4 +94,3 @@ const NewsPage = () => {
 };
 
 export default NewsPage;
-s;

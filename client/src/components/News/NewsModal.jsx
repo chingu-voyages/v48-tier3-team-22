@@ -22,7 +22,7 @@ const NewsModal = ({ article, onClose }) => {
         className="w-full h-full fixed top-0 right-0 left-0 bottom-0 bg-[rgba(49,49,49,0.8)] cursor-pointer"
         onClick={() => onClose(false)}
       ></div>
-      <div className="fixed top-[60%] left-[50%] -translate-x-[50%] -translate-y-[50%] bg-[#f1f1f1] px-[20px] py-[28px] rounded max-w-[600px] min-w-[300px]  flex flex-col items-center overflow-y-scroll h-4/5 scrollbar-thumb-emerald-500 scrollbar-thin scrollbar-thumb-rounded-full">
+      <div className="fixed top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] bg-[#f1f1f1] px-[20px] py-[28px] rounded max-w-[600px] min-w-[300px]  flex flex-col items-center overflow-y-scroll h-4/5 scrollbar-thumb-emerald-500 scrollbar-thin scrollbar-thumb-rounded-full">
         {article.urlToImage !== "N/A" ? (
           <img
             src={article.urlToImage}
