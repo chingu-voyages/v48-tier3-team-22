@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchNews } from "../../state/news";
 import NewsModal from "./NewsModal";
 
-import axios from "axios";
 import Loading from "../Loading";
 import styles from "./News.module.css";
 import newspaper from "../../assets/dino-newspaper.png";
@@ -18,7 +17,7 @@ const NewsPage = () => {
   useEffect(() => {
     dispatch(fetchNews());
   }, [dispatch]);
-  console.log(news.articles);
+
   const articles = news.articles;
 
   const coutHandler = () => {
