@@ -27,15 +27,49 @@ const Login = () => {
     setErrorType("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+
     e.preventDefault();
-    const { success, errorType, message } = dispatch(login({ email, password }));
-    if (!success) {
-      setAlertMessage(message);
-      setErrorType(errorType);
+
+    // Ensure all fields are filled
+    if (!email || !password) {
+      setAlertMessage("Please enter your email and password");
+      setIsAlertOpen(true);
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        "https://v48-tier3-team-22-api.onrender.com/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        const responseData = await response.json();
+        const errorMessage = responseData.message || "Login failed. Please try again."; // Default error message
+        setAlertMessage(errorMessage);
+        setIsAlertOpen(true);
+      } else {
+        dispatch(login({ email, password }));
+
+        navigate("/dinosaurs");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setAlertMessage("An unexpected error occurred. Please try again");
       setIsAlertOpen(true);
     }
   };
+
 
   const redirectToRegister = () => {
     navigate("/auth/Register");

@@ -15,11 +15,11 @@ const CustomAlert = ({ message, onClose }) => {
         border: '2px solid red',
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
         zIndex: 9999,
-        fontSize: '1.2em', // Larger font size
+        fontSize: '1.2em',
         textAlign: 'center',
       }}
     >
-      <p>{message}</p>
+      {message && <p>{message}</p>} {/* Display error message only if it exists */}
       <button
         style={{
           padding: '10px 20px',

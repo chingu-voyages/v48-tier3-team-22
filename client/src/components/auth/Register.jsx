@@ -54,16 +54,19 @@ const Register = () => {
           }),
         },
       );
-     
+
       if (!response.ok) {
-        const errorText = await response.text();
-        setAlertMessage(`Registration failed: ${errorText}`);
+        const responseData = await response.json();
+        const errorMessage = responseData.message || "Registration failed. Please try again."; // Default error message
+        setAlertMessage(errorMessage);
         setIsAlertOpen(true);
+
       } else {
-        setIsSuccess(true); // Set registration success flag
-        setAlertMessage(`Registration successful`);
+        setIsSuccess(true);
+        setAlertMessage(`Registration successful, welcome ${userName}`);
         setIsAlertOpen(true);
       }
+
     } catch (error) {
       console.error("Error:", error);
       setAlertMessage("An unexpected error occurred. Please try again");
