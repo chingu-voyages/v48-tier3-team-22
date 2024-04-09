@@ -1,14 +1,14 @@
 const DinosaurCard = ({ dinosaur, onHandleDinosaur, onHandleModal }) => {
   return (
-    <div className="flex flex-col justify-between items-center bg-gray-100 w-[200px] md:w-[400px] rounded-lg md:rounded-xl overflow-hidden shadow-2xl">
+    <div className="flex flex-col justify-between items-center bg-gray-100 w-[250px] md:w-[400px] rounded-lg md:rounded-xl overflow-hidden shadow-2xl">
       {dinosaur.imageSrc !== "N/A" ? (
         <img
           src={dinosaur.imageSrc}
           alt=""
-          className="w-[200px] md:w-[400px] h-[200px] md:h-[400px] rounded-t-lg md:rounded-t-xl"
+          className="w-[250px] md:w-[400px] h-[200px] md:h-[400px] rounded-t-lg md:rounded-t-xl"
         />
       ) : (
-        <div className="w-[200px] md:w-[400px] h-[200px] md:h-[400px] rounded-t-xl flex justify-center items-center bg-[#fff]">
+        <div className="w-[250px] md:w-[400px] h-[200px] md:h-[400px] rounded-t-xl flex justify-center items-center bg-[#fff]">
           No image available
         </div>
       )}
