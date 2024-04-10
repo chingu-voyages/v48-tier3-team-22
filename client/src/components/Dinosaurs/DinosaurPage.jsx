@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getDinosaurs } from "../../api/dinosaur";
 import DinosaurCard from "./DinosaurCard";
 import SearchIcon from "../../assets/search-icon.png";
@@ -8,7 +8,6 @@ import DinosaurModal from "./DinosaurModal";
 const DinosaurPage = () => {
   const [query, setQuery] = useState("");
   const [dinosaurs, setDinosaurs] = useState([]);
-  const [filteredDinosaurs, setFilteredDinosaurs] = useState(dinosaurs);
 
   const [typeOptions, setTypeOptions] = useState([]);
   const [dietOptions, setDietOptions] = useState([]);
@@ -17,6 +16,8 @@ const DinosaurPage = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentDino, setCurrentDino] = useState(null);
+
+  const inputRef = useRef();
 
   const getUniqueOptions = (arr = []) => {
     const set = new Set(arr);
@@ -27,9 +28,7 @@ const DinosaurPage = () => {
   useEffect(() => {
     getDinosaurs()
       .then((res) => {
-        console.log(res);
         setDinosaurs(res);
-        setFilteredDinosaurs(res);
         const typeOpts = getUniqueOptions(res.map((r) => r.typeOfDinosaur));
         const dietOpts = getUniqueOptions(res.map((r) => r.diet));
 
@@ -43,20 +42,33 @@ const DinosaurPage = () => {
     searchDinosaurs();
   }, [selectedType, selectedDiet]);
 
+  const filtered = dinosaurs.filter(
+    (d) =>
+      (query ? d.name.toLowerCase().includes(query.toLowerCase()) : true) &&
+      (selectedType && selectedType !== "None"
+        ? selectedType === d.typeOfDinosaur
+        : true) &&
+      (selectedDiet && selectedDiet !== "None"
+        ? selectedDiet === d.diet
+        : true),
+  );
+
   const searchDinosaurs = (e) => {
     e?.preventDefault();
-    const filtered = dinosaurs.filter(
-      (d) =>
-        (query ? d.name.toLowerCase().includes(query.toLowerCase()) : true) &&
-        (selectedType && selectedType !== "None"
-          ? selectedType === d.typeOfDinosaur
-          : true) &&
-        (selectedDiet && selectedDiet !== "None"
-          ? selectedDiet === d.diet
-          : true),
-    );
-    setFilteredDinosaurs(filtered);
+    return filtered;
+  };
+
+  const clearInput = (e) => {
+    e.preventDefault();
+    inputRef.current.value = "";
+  };
+
+  const clearSearch = () => {
     setQuery("");
+    setDinosaurs(dinosaurs);
+    setSelectedType("None");
+    setSelectedDiet("None");
+    inputRef.current.value = "";
   };
 
   return (
@@ -69,7 +81,7 @@ const DinosaurPage = () => {
       )}
 
       <div className="flex flex-col items-center">
-        <form className="mb-[30px]" action="" onSubmit={searchDinosaurs}>
+        <form className="mb-[30px]" action="" onChange={searchDinosaurs}>
           <div className="relative flex flex-col gap-y-[10px] md:flex-row items-center">
             <img
               className="absolute w-5  md:ml-3 pointer-events-none top-[9px] left-[10px] md:top-auto md:left-auto"
@@ -78,17 +90,22 @@ const DinosaurPage = () => {
             />
             <input
               className=" pr-2 py-[7px] pl-10 md:pr-3 md:py-2 shadow-sm  placeholder-gray-400 text-gray-600 rounded-xl md:rounded-r-none border-[1px] border-emerald-500 ring-emerald-500  focus:ring-[0.5px] focus:outline-none w-full block"
+              ref={inputRef}
               autoComplete="off"
               type="input"
               name="search"
               id="search"
               aria-label="Search dinosaurs"
-              placeholder="Search dinosaurs"
+              placeholder={
+                inputRef.current?.value === ""
+                  ? "Search for Dinosaur"
+                  : inputRef.current?.value
+              }
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
             <button
-              onClick={searchDinosaurs}
+              onClick={clearInput}
               className="px-3 py-[6.5px] bg-emerald-500 text-[#fff] font-bold rounded-lg md:rounded-l-none text-[14px] md:text-[20px] text-center"
             >
               Search
@@ -164,10 +181,17 @@ const DinosaurPage = () => {
             </select>
           </div>
         </div>
+
+        <button
+          onClick={clearSearch}
+          className="px-3 py-[6.5px] bg-emerald-500 text-[#fff] font-bold rounded-lg  text-[14px] md:text-[20px] text-center"
+        >
+          Clear fields
+        </button>
       </div>
 
       <div className="flex flex-wrap justify-center  gap-y-[20px] p-[20px] gap-x-[20px]">
-        {filteredDinosaurs.map((dinosaur) => (
+        {filtered.map((dinosaur) => (
           <DinosaurCard
             onHandleDinosaur={setCurrentDino}
             onHandleModal={setIsModalOpen}

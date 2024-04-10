@@ -1,81 +1,17 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import DinosaurImage from "../../assets/DinosaurReading.jpg";
+import CustomAlert from "./CustomAlert";
 import { login } from "../../state/user";
-
 import { useDispatch, useSelector } from "react-redux";
-
-const Container = styled.div`
-  min-height: 90vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f7fafc;
-  box-shadow: 10px 10px 20px 0px rgba(0, 0, 0, 0.5);
-`;
-
-const Card = styled.div`
-  max-width: 28rem;
-  width: 100%;
-  padding: 1.5rem;
-  background-color: #fff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  border-radius: 0.375rem;
-`;
-
-const Image = styled.img`
-  width: 6rem;
-  height: 6rem;
-  margin-bottom: 1rem;
-`;
-
-const Title = styled.h2`
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 1rem;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-`;
-
-const Label = styled.label`
-  font-size: 0.875rem;
-  font-weight: medium;
-`;
-
-const Input = styled.input`
-  padding: 0.5rem;
-`;
-
-const SubmitButton = styled.button`
-  background-color: red;
-  color: white;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 0.25rem;
-  cursor: pointer;
-  text-decoration: none;
-
-  &:hover {
-    transform: scale(1.1);
-    background-color: darkred;
-    transition: transform 0.3s;
-  }
-`;
-
-const LinkButton = styled.button`
-  color: #3182ce;
-`;
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [errorType, setErrorType] = useState("");
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
@@ -85,45 +21,97 @@ const Login = () => {
     }
   }, [isLoggedIn, navigate]);
 
-  const handleSubmit = (e) => {
+  const handleAlertClose = () => {
+    setIsAlertOpen(false);
+    setAlertMessage("");
+    setErrorType("");
+  };
+
+  const handleSubmit = async (e) => {
+
     e.preventDefault();
 
-    dispatch(login({ email, password }));
+    // Ensure all fields are filled
+    if (!email || !password) {
+      setAlertMessage("Please enter your email and password");
+      setIsAlertOpen(true);
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        "https://v48-tier3-team-22-api.onrender.com/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        const responseData = await response.json();
+        const errorMessage = responseData.message || "Login failed. Please try again."; // Default error message
+        setAlertMessage(errorMessage);
+        setIsAlertOpen(true);
+      } else {
+        dispatch(login({ email, password }));
+
+        navigate("/dinosaurs");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setAlertMessage("An unexpected error occurred. Please try again");
+      setIsAlertOpen(true);
+    }
   };
+
 
   const redirectToRegister = () => {
     navigate("/auth/Register");
   };
 
   return (
-    <Container className="pt-[115px]">
-      <Card>
-        <Image src={DinosaurImage} alt="DinosaurReading" />
-        <Title>Sign In</Title>
-        <Form onSubmit={handleSubmit}>
-          <Label>Email</Label>
-          <Input
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
+      <div className="max-w-md w-full py-6 px-6 bg-white shadow-lg rounded-md" style={{ boxShadow: "10px 10px 20px #004d00, -10px 10px 20px #004d00", marginTop: "100px" }}>
+        <img className="w-24 h-24 mb-4 mx-auto" src={DinosaurImage} alt="DinosaurReading" />
+        <h2 className="text-2xl font-bold text-center mb-4">Sign In</h2>
+        <form className="flex flex-col" onSubmit={handleSubmit}>
+          <label htmlFor="email" className="text-sm font-medium">Email<span className="text-red-500 text-lg">***</span></label>
+          <input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             type="email"
+            autoComplete="email"
             placeholder="Enter your email"
+            id="email"
+            name="email"
+            className="p-2 mb-4 border border-green-600"
           />
 
-          <Label>Password</Label>
-          <Input
+          <label htmlFor="password" className="text-sm font-medium">Password<span className="text-red-500 text-lg">***</span></label>
+          <input
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             type="password"
+            autoComplete="current-password"
             placeholder="Enter your password"
+            id="password"
+            name="password"
+            className="p-2 mb-4 border border-green-600"
           />
 
-          <SubmitButton type="submit">Sign In</SubmitButton>
-        </Form>
-        <LinkButton onClick={redirectToRegister}>
-          Don`t have an account? Sign Up
-        </LinkButton>
-      </Card>
-    </Container>
+          <button type="submit" className="bg-green-800 text-white p-2 rounded-md cursor-pointer transition duration-300 ease-in-out transform hover:scale-110">Sign In</button>
+        </form>
+        <button onClick={redirectToRegister} className="text-blue-500 text-center mt-4">Don't have an account? Sign Up</button>
+
+        {isAlertOpen && <CustomAlert message={alertMessage} errorType={errorType} onClose={handleAlertClose} />}
+      </div>
+    </div>
   );
 };
 
