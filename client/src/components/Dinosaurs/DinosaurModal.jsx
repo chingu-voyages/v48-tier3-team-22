@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import DinosaurLocation from "./DinosaurLocation";
 
 const DinosaurModal = ({ currentDino, onHandleModal }) => {
   const onKeyPressed = (e) => {
@@ -56,6 +57,7 @@ const DinosaurModal = ({ currentDino, onHandleModal }) => {
           <p className="flex flex-col mb-[20px]">
             <span className="text-emerald-500 font-bold">Found in: </span>
             {currentDino.foundIn}
+            <DinosaurLocation foundIn={currentDino.foundIn} />
           </p>
 
           {currentDino.namedBy != "N/A" ? (
