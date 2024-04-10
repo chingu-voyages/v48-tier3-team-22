@@ -1,32 +1,39 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchNews } from "../../state/news";
+import NewsModal from "./NewsModal";
+
 import Loading from "../Loading";
 import styles from "./News.module.css";
 import newspaper from "../../assets/dino-newspaper.png";
 
 const NewsPage = () => {
-  const [news, setNews] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
+  const { news, isLoading, error } = useSelector((state) => state.news);
+  const [selectedArticle, setSelectedArticle] = useState(null);
+
   const [articleCount, setArticleCount] = useState(10);
-  const api2Key = import.meta.env.VITE_SOME_KEY;
-  const apiUrl = `https://newsapi.org/v2/everything?qInTitle=dinosaurs&apiKey=${api2Key}`;
 
   useEffect(() => {
-    const fetchNews = async () => {
-      try {
-        const response = await axios.get(apiUrl);
-        setNews(response.data.articles);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Error fetching news:", error);
-      }
-    };
+    dispatch(fetchNews());
+  }, [dispatch]);
 
-    fetchNews();
-  }, [apiUrl]);
+  const articles = news.articles;
 
   const coutHandler = () => {
     setArticleCount((prevCount) => prevCount + 5);
+  };
+
+  const articleHandler = (article) => {
+    setSelectedArticle(article);
+  };
+
+  const closeModalHandler = () => {
+    setSelectedArticle(null);
+  };
+
+  const preventLoadHandler = (e) => {
+    e.preventDefault();
   };
 
   if (isLoading) {
@@ -41,11 +48,11 @@ const NewsPage = () => {
     <>
       <div className="pt-[115px]">
         <div className="flex">
-          <div className="w-2/5  p-4 bg-green-200  fixed left-0  bottom-0">
+          <div className=" w-2/5  p-4 bg-green-200  fixed left-0  bottom-0">
             <img
               src={newspaper}
               alt="Dinosaur"
-              className="w-full h-auto mt-6"
+              className="mt-4 w-full h-auto mt-6"
             />
           </div>
           <div className="w-1/1 p-1 pt-8 ml-[40%] ">
@@ -53,16 +60,14 @@ const NewsPage = () => {
               Dinosaurs News
             </h2>
             <ul>
-              {news.slice(0, articleCount).map((article, index) => (
-                <article key={index} className={styles.articleContainer}>
+              {articles?.slice(0, articleCount).map((article, index) => (
+                <article
+                  key={index}
+                  className={styles.articleContainer}
+                  onClick={() => articleHandler(article)}
+                >
                   <p>{article.source.name}</p>
-                  <a
-                    href={article.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {article.title}
-                  </a>
+                  <a onClick={preventLoadHandler}>{article.title}</a>
                   <div className="ml-auto">
                     <span>{new Date(article.publishedAt).getFullYear()}</span>
                   </div>
@@ -80,6 +85,9 @@ const NewsPage = () => {
           </div>
         </div>
       </div>
+      {selectedArticle && (
+        <NewsModal article={selectedArticle} onClose={closeModalHandler} />
+      )}
     </>
   );
 };

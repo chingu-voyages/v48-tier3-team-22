@@ -32,7 +32,7 @@ const Header = () => {
   };
 
   return (
-    <header className="p-[15px] md:p-[18px] flex flex-row justify-between items-center text-emerald-100   md:my-0 fixed z-50 top-0 left-0 right-0 bg-gradient-to-tl from-green-950 to-black-950">
+    <header className="p-[15px] md:p-[18px] flex flex-row justify-between items-center text-emerald-100   md:my-0 fixed z-60 top-0 left-0 right-0 bg-gradient-to-tl from-green-950 to-black-950">
       <div className="flex items-center">
         <img src={DinoLogo} alt="" className="w-[40px] md:w-[60px]" />
         <h1 className="ml-[10px] md:ml-[30px] md:text-[30px] font-bold">
@@ -70,8 +70,45 @@ const Header = () => {
       </nav>
 
       {loggedIn ? (
+
+        <div>
+          <p>Welcome, {userName}</p>
+          <p
+            className="p-[5px] hover:font-bold cursor-pointer"
+            onClick={handleLogout}
+          >
+            Log Out
+          </p>
+        </div>
+      ) : (
+        <div className="flex items-center">
+          <button
+            onClick={toggleBtn}
+            className="p-[8px] bg-emerald-500 text-[#fff] font-bold rounded-xl text-[14px] md:text-[20px] relative hidden md:block"
+          >
+            Get started
+          </button>
+          {isClicked && (
+            <div className="absolute flex flex-col justify-center items-center bg-[#fff] text-emerald-500 rounded-b-xl rounded-t top-[53px] md:right-[18px] md:top-[71px] w-[93px] md:w-[125px] p-[10px]">
+              <p
+                className="p-[5px] hover:font-bold cursor-pointer text-[14px] md:text-base"
+                onClick={() => closeBtn("/auth/register")}
+              >
+                Sign Up
+              </p>
+              <p
+                className="p-[5px] hover:font-bold cursor-pointer text-[14px] md:text-base"
+                onClick={() => closeBtn("/auth/login")}
+              >
+                Log In
+              </p>
+            </div>
+          )}
+
+
         <div className="flex items-center gap-x-[10px] relative">
           <p>Welcome,</p>
+
           <div
             className="font-bold cursor-pointer  text-[#fff]  md:text-[18px] flex items-center justify-center "
             onClick={() => setIsNameClicked((name) => !name)}
