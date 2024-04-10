@@ -1,13 +1,19 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchNews } from "../../state/news";
+import NewsModal from "./NewsModal";
+
 import Loading from "../Loading";
 import styles from "./News.module.css";
 import newspaper from "../../assets/dino-newspaper.png";
 
 const NewsPage = () => {
-  const [news, setNews] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
+  const { news, isLoading, error } = useSelector((state) => state.news);
+  const [selectedArticle, setSelectedArticle] = useState(null);
+
   const [articleCount, setArticleCount] = useState(10);
+
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -26,8 +32,21 @@ const NewsPage = () => {
     fetchNews();
   }, []);
 
+
   const coutHandler = () => {
     setArticleCount((prevCount) => prevCount + 5);
+  };
+
+  const articleHandler = (article) => {
+    setSelectedArticle(article);
+  };
+
+  const closeModalHandler = () => {
+    setSelectedArticle(null);
+  };
+
+  const preventLoadHandler = (e) => {
+    e.preventDefault();
   };
 
   if (isLoading) {
@@ -42,17 +61,18 @@ const NewsPage = () => {
     <>
       <div className="pt-[115px]">
         <div className="flex">
-          <div className="w-2/5  p-4 bg-green-200  fixed left-0  bottom-0">
+          <div className=" w-2/5  p-4 bg-green-200  fixed left-0  bottom-0">
             <img
               src={newspaper}
               alt="Dinosaur"
-              className="w-full h-auto mt-6"
+              className="mt-4 w-full h-auto mt-6"
             />
           </div>
           <div className="w-1/1 p-1 pt-8 ml-[40%] ">
             <h2 className="text-6xl font-bold mb-8 text-center">
               Dinosaurs News
             </h2>
+
 
             {error && (
               <div className="text-center text-red-500 mb-4">{error}</div>
@@ -91,9 +111,13 @@ const NewsPage = () => {
                 </button>
               </div>
             )}
+
           </div>
         </div>
       </div>
+      {selectedArticle && (
+        <NewsModal article={selectedArticle} onClose={closeModalHandler} />
+      )}
     </>
   );
 };
