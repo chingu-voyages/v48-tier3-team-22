@@ -47,15 +47,15 @@ const NewsPage = () => {
   return (
     <>
       <div className="pt-[115px]">
-        <div className="flex">
-          <div className=" w-2/5  p-4 bg-green-200  fixed left-0  bottom-0">
+        <div className="flex ">
+          <div className=" w-2/5  p-4 bg-green-200  fixed left-0  bottom-0 dinoImg">
             <img
               src={newspaper}
               alt="Dinosaur"
               className="mt-4 w-full h-auto mt-6"
             />
           </div>
-          <div className="w-1/1 p-1 pt-8 ml-[40%] ">
+          <div className="w-1/1 p-1 pt-8 md:ml-[40%]">
             <h2 className="text-6xl font-bold mb-8 text-center">
               Dinosaurs News
             </h2>
@@ -76,7 +76,7 @@ const NewsPage = () => {
             </ul>
             <div className="m-8">
               <button
-                className="p-[8px] bg-emerald-500 text-[#fff] font-bold rounded-xl md:text-[20px] relative"
+                className="p-[8px] ml-[18px] md:ml-[20px]  bg-emerald-500 text-[#fff] font-bold rounded-xl md:text-[20px] relative"
                 onClick={coutHandler}
               >
                 Load More

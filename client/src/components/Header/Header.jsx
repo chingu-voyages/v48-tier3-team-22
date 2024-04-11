@@ -70,7 +70,6 @@ const Header = () => {
       </nav>
 
       {loggedIn ? (
-
         <div>
           <p>Welcome, {userName}</p>
           <p
@@ -105,36 +104,34 @@ const Header = () => {
             </div>
           )}
 
+          <div className="flex items-center gap-x-[10px] relative">
+            <p>Welcome,</p>
 
-        <div className="flex items-center gap-x-[10px] relative">
-          <p>Welcome,</p>
+            <div
+              className="font-bold cursor-pointer  text-[#fff]  md:text-[18px] flex items-center justify-center "
+              onClick={() => setIsNameClicked((name) => !name)}
+            >
+              {userName}
 
-          <div
-            className="font-bold cursor-pointer  text-[#fff]  md:text-[18px] flex items-center justify-center "
-            onClick={() => setIsNameClicked((name) => !name)}
-          >
-            {userName}
+              {isNameClicked && (
+                <div className=" bg-[#fff] absolute left-0 right-0 top-[40px] text-emerald-500 rounded-b-lg rounded-l-lg gap-y-[5px] flex flex-col  font-normal px-[3px] py-[15px] text-[16px]">
+                  <div className="flex items-center gap-x-[5px] ml-[5px]">
+                    <img className="w-[20px]" src={UserIcon} alt="" />
+                    <p>{userName}</p>
+                  </div>
 
-            {isNameClicked && (
-              <div className=" bg-[#fff] absolute left-0 right-0 top-[40px] text-emerald-500 rounded-b-lg rounded-l-lg gap-y-[5px] flex flex-col  font-normal px-[3px] py-[15px] text-[16px]">
-                <div className="flex items-center gap-x-[5px] ml-[5px]">
-                  <img className="w-[20px]" src={UserIcon} alt="" />
-                  <p>{userName}</p>
+                  <div
+                    className="flex items-center hover:font-bold cursor-pointer gap-x-[5px] ml-[5px]"
+                    onClick={handleLogout}
+                  >
+                    <img className="w-[20px]" src={LogoutIcon} alt="" />
+                    <p>Log Out</p>
+                  </div>
                 </div>
-
-                <div
-                  className="flex items-center hover:font-bold cursor-pointer gap-x-[5px] ml-[5px]"
-                  onClick={handleLogout}
-                >
-                  <img className="w-[20px]" src={LogoutIcon} alt="" />
-                  <p>Log Out</p>
-                </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
-      ) : (
-        ""
       )}
       <div className="flex items-center md:hidden">
         <div
@@ -145,7 +142,7 @@ const Header = () => {
             <img src={CloseMenuIcon} alt="" className="cursor-pointer" />
           ) : (
             <img src={MenuIcon} alt="" className="cursor-pointer" />
-          )}{" "}
+          )}
         </div>
       </div>
     </header>
