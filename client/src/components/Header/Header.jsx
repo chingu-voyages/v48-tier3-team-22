@@ -32,7 +32,7 @@ const Header = () => {
   };
 
   return (
-    <header className="p-[15px] md:p-[18px] flex flex-row justify-between items-center text-emerald-100   md:my-0 fixed z-60 top-0 left-0 right-0 bg-gradient-to-tl from-green-950 to-black-950">
+    <header className="p-[15px] md:p-[18px] flex flex-row justify-between items-center text-emerald-100   md:my-0 fixed z-100 top-0 left-0 right-0 bg-gradient-to-tl from-green-950 to-black-950">
       <div className="flex items-center">
         <img src={DinoLogo} alt="" className="w-[40px] md:w-[60px]" />
         <h1 className="ml-[10px] md:ml-[30px] md:text-[30px] font-bold">

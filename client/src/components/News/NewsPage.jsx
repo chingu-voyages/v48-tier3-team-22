@@ -7,7 +7,11 @@ import Loading from "../Loading";
 import styles from "./News.module.css";
 import newspaper from "../../assets/dino-newspaper.png";
 
+import AOS from "aos";
+import "aos/dist/aos.css";
+
 const NewsPage = () => {
+  AOS.init();
   const dispatch = useDispatch();
   const { news, isLoading, error } = useSelector((state) => state.news);
   const [selectedArticle, setSelectedArticle] = useState(null);
@@ -48,11 +52,11 @@ const NewsPage = () => {
     <>
       <div className="pt-[115px]">
         <div className="flex ">
-          <div className=" w-2/5  p-4 bg-green-200  fixed left-0  bottom-0 dinoImg">
+          <div className=" w-2/5  p-4 bg-green-200   fixed left-0  bottom-0 dinoImg">
             <img
               src={newspaper}
               alt="Dinosaur"
-              className="mt-4 w-full h-auto mt-6"
+              className="mt-4 w-full h-auto mt-6  "
             />
           </div>
           <div className="w-1/1 p-1 pt-8 md:ml-[40%]">
@@ -65,6 +69,8 @@ const NewsPage = () => {
                   key={index}
                   className={styles.articleContainer}
                   onClick={() => articleHandler(article)}
+                  data-aos="fade-up"
+                  data-aos-duration="1000"
                 >
                   <p>{article.source.name}</p>
                   <a onClick={preventLoadHandler}>{article.title}</a>
