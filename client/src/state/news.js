@@ -4,8 +4,8 @@ import axios from 'axios';
 export const fetchNews = createAsyncThunk('news/fetchNews', () => {
   return axios
     .get(
-      // `https://newsapi.org/v2/everything?qInTitle=dinosaurs&apiKey=82fe875a3ebf429badca4cb752ea227d`
-      'https://v48-tier3-team-22-api.onrender.com/api/news'
+      `https://newsapi.org/v2/everything?qInTitle=dinosaurs&apiKey=82fe875a3ebf429badca4cb752ea227d`
+      // 'https://v48-tier3-team-22-api.onrender.com/api/news'
     )
     .then((response) => response.data);
 });
