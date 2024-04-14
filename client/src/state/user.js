@@ -1,20 +1,20 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import authService from "../components/auth/authService";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import authService from '../components/auth/authService';
 
 // Async thunk for logging in
 export const login = createAsyncThunk(
-  "user/login",
+  'user/login',
   async (credentials, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        "https://v48-tier3-team-22-api.onrender.com/api/auth/login",
+        'https://v48-tier3-team-22-api.onrender.com/api/auth/login',
         {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(credentials),
-        },
+        }
       );
-      if (!response.ok) throw new Error("Network response was not ok");
+      if (!response.ok) throw new Error('Network response was not ok');
       const data = await response.json();
 
       authService.setUserData(data); // Save to local storage
@@ -22,43 +22,33 @@ export const login = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  },
+  }
 );
 
 // Async thunk for logging out
 export const logout = createAsyncThunk(
-  "user/logout",
+  'user/logout',
   async (_, { rejectWithValue }) => {
-    // getting token from localstorage directly as it isnt stored in the state
-    const token = localStorage.getItem("token");
+    // getting token from localstorage directly as it isn't stored in the state
+    const token = localStorage.getItem('token');
 
     if (!token) {
-      return rejectWithValue("No token found");
+      return rejectWithValue('No token found');
     }
-    try {
-      const response = await fetch(
-        "https://v48-tier3-team-22-api.onrender.com/api/auth/logout",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ token }),
-        },
-      );
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Logout failed");
-      }
+    try {
+      // Removing the token from localstorage
+      localStorage.removeItem('token');
       authService.clearUserData();
-      return await response.json();
+      return 'Logged out successfully'; // Optionally returning a success message
     } catch (error) {
-      return rejectWithValue(error.message);
+      return rejectWithValue('Logout failed: ' + error.message);
     }
-  },
+  }
 );
 
 const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState: {
     isLoggedIn: authService.isLoggedIn(),
     userName: authService.getUserName(),

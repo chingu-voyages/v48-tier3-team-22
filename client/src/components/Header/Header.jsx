@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { useNavigate, NavLink } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { logout as logoutAction } from "../../state/user";
+import { useState } from 'react';
+import { useNavigate, NavLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout as logoutAction } from '../../state/user';
 
-import DinoLogo from "../../assets/dino-logo.png";
-import MenuIcon from "../../assets/menu-icon.png";
-import CloseMenuIcon from "../../assets/close-menu-icon.png";
-import UserIcon from "../../assets/user-logo.png";
-import LogoutIcon from "../../assets/logout.png";
+import DinoLogo from '../../assets/dino-logo.png';
+import MenuIcon from '../../assets/menu-icon.png';
+import CloseMenuIcon from '../../assets/close-menu-icon.png';
+import UserIcon from '../../assets/user-logo.png';
+import LogoutIcon from '../../assets/logout.png';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -19,7 +19,7 @@ const Header = () => {
 
   const handleLogout = () => {
     dispatch(logoutAction());
-    navigate("/");
+    navigate('/');
   };
 
   const toggleMenu = () => {
@@ -38,35 +38,54 @@ const Header = () => {
           Dinosaur App
         </h1>
       </div>
-      <nav
-        className={
-          isMenuOpen
-            ? `flex flex-col items-center absolute top-[70px] left-0 right-0 w-full bg-[#fff] text-emerald-500 p-[10px]`
-            : `hidden md:block flex md:flex-row items-center justify-between md:static`
-        }
-      >
-        <NavLink
-          to="/"
-          className="p-[10px] md:p-0 md:ml-[20px] md:text-[22px]"
-          onClick={closeMenu}
+      {loggedIn ? (
+        <nav
+          className={
+            isMenuOpen
+              ? `flex flex-col items-center absolute top-[70px] left-0 right-0 w-full bg-[#fff] text-emerald-500 p-[10px]`
+              : `hidden md:block flex md:flex-row items-center justify-between md:static`
+          }
         >
-          Home
-        </NavLink>
-        <NavLink
-          to="/dinosaurs"
-          className="p-[10px] md:p-0 md:ml-[20px] md:text-[22px]"
-          onClick={closeMenu}
-        >
-          Dinosaurs
-        </NavLink>
-        <NavLink
-          to="/api/news"
-          className="p-[10px] md:p-0 md:ml-[20px] md:text-[22px]"
-          onClick={closeMenu}
-        >
-          News
-        </NavLink>
-      </nav>
+          <NavLink
+            to="/"
+            className="p-[10px] md:p-0 md:ml-[20px] md:text-[22px]"
+            onClick={closeMenu}
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to="/dinosaurs"
+            className="p-[10px] md:p-0 md:ml-[20px] md:text-[22px]"
+            onClick={closeMenu}
+          >
+            Dinosaurs
+          </NavLink>
+          <NavLink
+            to="/news"
+            className="p-[10px] md:p-0 md:ml-[20px] md:text-[22px]"
+            onClick={closeMenu}
+          >
+            News
+          </NavLink>
+        </nav>
+      ) : (
+        <nav>
+          <NavLink
+            to="/login"
+            className="p-[10px] md:p-0 md:ml-[20px] md:text-[22px]"
+            onClick={closeMenu}
+          >
+            Login
+          </NavLink>
+          <NavLink
+            to="/register"
+            className="p-[10px] md:p-0 md:ml-[20px] md:text-[22px]"
+            onClick={closeMenu}
+          >
+            Register
+          </NavLink>
+        </nav>
+      )}
       {loggedIn ? (
         <div className="flex items-center gap-x-[10px] relative">
           <p>Welcome,</p>
@@ -95,7 +114,7 @@ const Header = () => {
           </div>
         </div>
       ) : (
-        ""
+        ''
       )}
 
       <div className="flex items-center md:hidden">

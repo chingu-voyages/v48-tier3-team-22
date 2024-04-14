@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchNews } from "../../state/news";
-import NewsModal from "./NewsModal";
-import Loading from "../Loading";
-import styles from "./News.module.css";
-import newspaper from "../../assets/dino-newspaper.png";
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchNews } from '../../state/news';
+import NewsModal from './NewsModal';
+import Loading from '../Loading';
+import styles from './News.module.css';
+import newspaper from '../../assets/dino-newspaper.png';
 
-import AOS from "aos";
-import "aos/dist/aos.css";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const NewsPage = () => {
   AOS.init();
@@ -44,63 +44,69 @@ const NewsPage = () => {
     );
   }
 
-  return (
-    <>
-      <div className="pt-[115px]">
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-96">
+        <h2>Woops! Something went wrong!</h2>
+      </div>
+    );
+  }
 
-        <div className="flex ">
-          <div className=" w-2/5  p-4 bg-green-200   fixed left-0  bottom-0 dinoImg">
-            <img
-              src={newspaper}
-              alt="Dinosaur"
-              className="mt-4 w-full h-auto mt-6  "
-            />
-          </div>
-          <div className="w-1/1 p-1 pt-8 md:ml-[40%]">
-
-            <h2 className="text-6xl font-bold mb-8 text-center">
-              Dinosaurs News
-            </h2>
-            {error && (
-              <div className="text-center text-red-500 mb-4">{error}</div>
-            )}
-            <ul>
-              {news.slice(0, articleCount).map((article, index) => (
-                <li
-                  key={index}
-                  className={styles.articleContainer}
-                  onClick={() => articleHandler(article)}
-                  data-aos="fade-up"
-                  data-aos-duration="1000"
+  if (news.articles) {
+    return (
+      <>
+        <div className="pt-[115px]">
+          <div>
+            <div className=" w-2/5  p-4 bg-green-200 dinoImg mx-auto">
+              <h2 className="text-6xl font-bold mb-8 text-center">
+                Dinosaurs News
+              </h2>
+              <img
+                src={newspaper}
+                alt="Dinosaur"
+                className="mt-4 w-full h-auto mt-6  "
+              />
+            </div>
+            <div>
+              {error && (
+                <div className="text-center text-red-500 mb-4">{error}</div>
+              )}
+              <ul>
+                {news.articles.slice(0, articleCount).map((article, index) => (
+                  <li
+                    key={index}
+                    className={styles.articleContainer}
+                    onClick={() => articleHandler(article)}
+                    data-aos="fade-up"
+                    data-aos-duration="1000"
+                  >
+                    <p>{article.source.name}</p>
+                    <a href="#" onClick={preventLoadHandler}>
+                      {article.title}
+                    </a>
+                    <div className="ml-auto">
+                      <span>{new Date(article.publishedAt).getFullYear()}</span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+              <div className="m-8">
+                <button
+                  className="p-[8px] ml-[18px] md:ml-[20px]  bg-emerald-500 text-[#fff] font-bold rounded-xl md:text-[20px] relative"
+                  onClick={countHandler}
                 >
-                  <p>{article.source.name}</p>
-                  <a href="#" onClick={preventLoadHandler}>
-                    {article.title}
-                  </a>
-                  <div className="ml-auto">
-                    <span>{new Date(article.publishedAt).getFullYear()}</span>
-                  </div>
-                </li>
-              ))}
-            </ul>
-            <div className="m-8">
-              <button
-
-                className="p-[8px] ml-[18px] md:ml-[20px]  bg-emerald-500 text-[#fff] font-bold rounded-xl md:text-[20px] relative"
-                onClick={coutHandler}
-
-              >
-                Load More
-              </button>
+                  Load More
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      {selectedArticle && (
-        <NewsModal article={selectedArticle} onClose={closeModalHandler} />
-      )}
-    </>
-  );
+        {selectedArticle && (
+          <NewsModal article={selectedArticle} onClose={closeModalHandler} />
+        )}
+      </>
+    );
+  }
 };
 
 export default NewsPage;

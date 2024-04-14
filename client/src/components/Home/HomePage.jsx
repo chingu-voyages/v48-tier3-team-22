@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const HomePage = () => {
   const [isClicked, setIsClicked] = useState(false);
@@ -23,7 +23,7 @@ const HomePage = () => {
         <p className="mb-[20px]">Welcome to Jurassic World</p>
 
         {loggedIn ? (
-          ""
+          ''
         ) : (
           <div className="flex items-center block">
             <button
@@ -35,13 +35,13 @@ const HomePage = () => {
                 <div className="absolute flex flex-col justify-center items-center bg-[#fff] text-emerald-500 rounded-b-xl rounded-t top-[37px] right-0 md:top-[45px] left-0 p-[10px]">
                   <p
                     className="p-[5px] hover:font-bold cursor-pointer text-[14px] md:text-base"
-                    onClick={() => closeBtn("/auth/register")}
+                    onClick={() => closeBtn('/register')}
                   >
                     Sign Up
                   </p>
                   <p
                     className="p-[5px] hover:font-bold cursor-pointer text-[14px] md:text-base"
-                    onClick={() => closeBtn("/auth/login")}
+                    onClick={() => closeBtn('/login')}
                   >
                     Log In
                   </p>
