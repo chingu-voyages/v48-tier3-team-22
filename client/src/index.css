@@ -61,3 +61,10 @@ nav a.active {
     transform: translate(-10px, -10px);
   }
 }
+
+@media only screen and (max-width: 550px),
+  only screen and (max-device-width: 550px) {
+  .dinoImg {
+    display: none;
+  }
+}
