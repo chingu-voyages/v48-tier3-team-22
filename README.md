@@ -60,6 +60,7 @@ The goals for this project included:
 git clone https://github.com/chingu-voyages/v48-tier3-team-22.git
 ```
 2. Navigate to the project directory.
+
 Frontend:
 ```
 cd client
