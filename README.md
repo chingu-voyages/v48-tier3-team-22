@@ -48,8 +48,8 @@ The goals for this project included:
 
 
 **Server:**
- -Node 
- -Express
+ - Node 
+ - Express
 
 
 ## 👩‍💻 Running the App
