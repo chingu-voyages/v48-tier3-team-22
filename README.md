@@ -1,69 +1,96 @@
-# voyage-tasks
 
-Your project's `readme` is as important to success as your code. For
-this reason you should put as much care into its creation and maintenance
-as you would any other component of the application.
+# Dinosaurs 	🦖
 
-If you are unsure of what should go into the `readme` let this article,
-written by an experienced Chingu, be your starting point -
-[Keys to a well written README](https://tinyurl.com/yk3wubft).
 
-And before we go there's "one more thing"! Once you decide what to include
-in your `readme` feel free to replace the text we've provided here.
 
-> Own it & Make it your Own!
 
-## Team Documents
 
-You may find these helpful as you work together to organize your project.
 
-- [Team Project Ideas](./docs/team_project_ideas.md)
-- [Team Decision Log](./docs/team_decision_log.md)
+## 🌍 Overview
 
-Meeting Agenda templates (located in the `/docs` directory in this repo):
+This app was developed as a part of the 6-week [Chingu](https://www.chingu.io/) Voyage 48 in March and April 202. The app uses data from [Dinosaurs API](https://chinguapi.onrender.com/dinosaurs)and [News API](https://chinguapi.onrender.com/dinosaurs).
 
-- Meeting - Voyage Kickoff --> ./docs/meeting-voyage_kickoff.docx
-- Meeting - App Vision & Feature Planning --> ./docs/meeting-vision_and_feature_planning.docx
-- Meeting - Sprint Retrospective, Review, and Planning --> ./docs/meeting-sprint_retrospective_review_and_planning.docx
-- Meeting - Sprint Open Topic Session --> ./docs/meeting-sprint_open_topic_session.docx
+The goals for this project included:
 
-## Our Team
+- To create a purely fullstack application using the provided data.
+- To use any language, tool, or library to plan, design, and build the app.
+- To build the app without the use of AI-base solution generators like GitHub CoPilot.
+- Implement key features, including:
+  -  A search functionality enabling users to find dinosaurs by name.
+  - A page that display dinosaurs' names and corresponding images sourced from the provided JSON file. Each dinosaur entry should be clickable to view full details.
 
-Everyone on your team should add their name along with a link to their GitHub
-& optionally their LinkedIn profiles below. Do this in Sprint #1 to validate
-your repo access and to practice PR'ing with your team _before_ you start
-coding!
+  - A Dinosaurs News Page showcasing the latest news where dinosaurs are mentioned, ensuring correctness of displayed content.
 
-- Austine #1: [GitHub](https://github.com/EmperorA) / [LinkedIn](https://linkedin.com/in/austineuwumwonse)
+  In addition to the goals related to the application functionality, our team also had goals related to building experience working with an international, remote team of developers:
+  - To try using new tools to build the application.
+  - To manage workflow with an international, remote team of developers and product owner.
+## 	💻 Voyage Team
 
-- Aleksandar #2: [GitHub](https://github.com/vukas86) / [LinkedIn](https://linkedin.com/in//aleksandar-vukasovic)
+- Aleksandar: [GitHub](https://github.com/vukas86) / [LinkedIn](https://linkedin.com/in//aleksandar-vukasovic)
+- Austine:  [GitHub](https://github.com/EmperorA) / [LinkedIn](https://linkedin.com/in/austineuwumwonse)
+- Teja:  [GitHub](https://github.com/teodora-kocic) / [LinkedIn](https://www.linkedin.com/in/teodora-kocic93/)
+- Shakes: [Github](https://github.com/Shakespro)
+## 🛠️ Technologies & Dependencies
 
-- Shakes #3: [Github](https://github.com/Shakespro)
-
-- Teammate name #n: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)
-
-# Dinosaur APP
-
-## Requirements
-
+**Requirements:**
 - React
 - Node v18
 - npm v9
 
-## Installation
 
-To install and run locally, clone the github repo, then run the command npm install to install all dependencies.
+**Client:**
+- React
+- [React Redux](https://react-redux.js.org/)
+- Vite
+- [Maps Geocode](https://geocode.maps.co/)
+- [Tailwind](https://tailwindcss.com/)
+- [AOS](https://michalsnik.github.io/aos/)
 
-### Frontend:
 
-1. Navigate to your client side from the root project by running the command cd client.
+**Server:**
+ - Node 
+ - Express
+
+
+## 👩‍💻 Running the App
+
+1. Clone this repo.
+
+```
+git clone https://github.com/chingu-voyages/v48-tier3-team-22.git
+```
+2. Navigate to the project directory.
+
+Frontend:
+```
+cd client
+```
+Backend:
+```
+cd server
+```
+.
 2. Run the command npm start to start the client side only
+```
+cd v48-tier3-team-22
+```
+3. Then navigate to the app within the project.
 
-### Backend:
+```
+cd client
+```
 
-1. Navigate to your server side from the root project by running the command cd server
-2. Run the command nodemon server/server.js to start the server side
+4. Install the dependencies.
 
-### Full stack:
+```
+npm install
+```
+## 👀 App Demo
 
-1. From the root project, run the command npm run dev to start both sides concurrently.
+You can see [our deployed Dinosaurs app here](https://glittering-paprenjak-8be00d.netlify.app/).
+
+
+## 🙏 Thanks!
+
+Finally, want to share special thanks to [the Chingu team](https://www.chingu.io/donate) for being supportive throughout the development process. We appreciate you!
+
